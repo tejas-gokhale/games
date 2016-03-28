@@ -159,6 +159,8 @@ int main()
 {
 	// clearScreen(50, '\n');
 	SetConsoleTitle("Simple BlackJack by Tejas Gokhale");
+	SetConsoleTextAttribute (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_BLUE);                                                          
+                                                            
 	cout << right << setw(50) << setfill(' ') << "Welcome to Simple BlackJack" << endl;
 	cout << right << setw(50) << setfill(' ') << "Written by Tejas Gokhale  " << endl;
 	cout << right << setw(50) << setfill(' ')<<  "***************************" << endl;
@@ -198,6 +200,7 @@ int main()
 		clubs[jjj] = deck[jjj+26];
 		diamonds[jjj] = deck[jjj+39];	
 	}
+	SetConsoleTextAttribute (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN);
 	cout << " -------------------------------------------" << endl;
 	cout << " | "; func_printDeck(spades, 13); cout << "| " << endl;
 	cout << " | "; func_printDeck(hearts, 13); cout << "| " << endl;
@@ -205,8 +208,10 @@ int main()
 	cout << " | "; func_printDeck(diamonds, 13); cout << "| " << endl;
 	cout << " -------------------------------------------" << endl;
 
+	SetConsoleTextAttribute (GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_BLUE);
 	cout << "\n";
 	
+
 	//func_swapCard(&deck[0], &deck[1]);
 	//cout << deck << "\t" << deck+1 << endl;
 	//cout << deck[0].rank << "\t" << deck[1].rank << endl;
