@@ -3,6 +3,10 @@
 #include <ctime>
 #include <cstdlib>
 #include <iomanip>
+#include <windows.h>
+#include <unistd.h>
+#include <time.h>
+
 
 using namespace std;
 
@@ -73,7 +77,7 @@ void func_printDeck(Card *deck, int sizeOfDeck)
 	for (int iii = 0; iii < sizeOfDeck; iii++)
 	{
 		func_printCard(*(deck+iii));
-		cout << endl;
+		cout << " ";
 	}
 }
 
@@ -128,12 +132,35 @@ int func_playerMove()
 	return move;
 }
 
+void dotDelay(int numOfDots, int pause)
+{
+	// could have also used sleep(1) for a delay of 1 sec
+	// this method works too
+	clock_t start;           
+	for(int i = 0; i < numOfDots; i++)
+	{       
+		cout<< " . ";
+		start = clock();
+		while( clock() < start + pause )
+		{
+             //pause
+		}
+
+	}
+	cout << endl;
+}
+
+
 int main()
 {
 	
 	cout << right << setw(50) << setfill(' ') << "Welcome to Simple BlackJack" << endl;
 	cout << right << setw(50) << setfill(' ') << "Written by Tejas Gokhale  " << endl;
 	cout << right << setw(50) << setfill(' ')<<  "***************************" << endl;
+
+	cout << "Loading ";
+	dotDelay(5, 1000);
+
 
 	Card *deck = new Card[NUM_OF_CARDS];
 
@@ -149,6 +176,31 @@ int main()
 			deck[cardNum].rank = static_cast<Rank>(rankIndex);
 		}
 	}
+
+	cout << "Dealer: I'm not going to let you cry about unfair decks after you lose." << endl;
+	sleep(2);
+	cout << "\t" << "Here... Check for yourself!" << endl;
+	
+	Card *spades = new Card[NUM_OF_CARDS/4];
+	Card *hearts = new Card[NUM_OF_CARDS/4];
+	Card *clubs = new Card[NUM_OF_CARDS/4];
+	Card *diamonds = new Card[NUM_OF_CARDS/4];
+
+	for (int jjj = 0; jjj < NUM_OF_CARDS/4; jjj++)
+	{
+		spades[jjj] = deck[jjj];
+		hearts[jjj] = deck[jjj+13];
+		clubs[jjj] = deck[jjj+26];
+		diamonds[jjj] = deck[jjj+39];	
+	}
+	cout << " -------------------------------------------" << endl;
+	cout << " | "; func_printDeck(spades, 13); cout << "| " << endl;
+	cout << " | "; func_printDeck(hearts, 13); cout << "| " << endl;
+	cout << " | "; func_printDeck(clubs, 13); cout << "| " << endl;
+	cout << " | "; func_printDeck(diamonds, 13); cout << "| " << endl;
+	cout << " -------------------------------------------" << endl;
+
+	cout << "\n";
 	
 	//func_swapCard(&deck[0], &deck[1]);
 	//cout << deck << "\t" << deck+1 << endl;
@@ -157,89 +209,101 @@ int main()
 
 // shuffle deck
 // -------------
+	sleep(2);
 	func_shuffleDeck(deck);
 	//func_printDeck(deck, NUM_OF_CARDS);
+	cout << "Shuffling Deck ";
 
+	// just some swag.. adding delays
+	dotDelay(3, 1000);
+	cout << endl;
+
+
+	int startGame;
+	cout << "Press ENTER to play. If you have the guts, i.e.: ";
+	if (cin.get() == '\n')
+	{
 // *** BLACKJACK ***
 // ------------------
-	Card *cardptr = &deck[0];
+		Card *cardptr = &deck[0];
 
-	int playerScore = 0;
-	int dealerScore = 0;
+		int playerScore = 0;
+		int dealerScore = 0;
 	// deal cards
 	// -----------
-	cout << "Dealer gets: " << "\t";
-	func_printCard(*cardptr);
-	cout << "\t";
-	dealerScore += func_cardValue(*cardptr++);
-	cout << "Dealer's current score: " << dealerScore << endl;
-	//cout << dealerScore << func_cardValue(*cardptr);
-
-	cout << "Player gets: " << "\t";
-	func_printCard(*cardptr);
-	cout << "\t";
-	playerScore += func_cardValue(*cardptr++);
-	cout << "Your current score is: " << playerScore << endl;
-
-	int move = 1; 
-	int playerBust = 0;
-	int dealerBust = 0;
-	// Player turn
-	while (1)
-	{
-		int move = func_playerMove();
-
-		if (move == 1)
-		{
-			cout << "You get: " << "\t";
-			func_printCard(*cardptr);
-			cout << "\t";
-			playerScore += func_cardValue(*cardptr++);
-			cout << "Your current score is: " << playerScore << endl;
-		}
-		else
-			break;
-		if (playerScore > 21)
-		{
-			playerBust = 1;
-			break;
-		}
-	}
-
-	while (dealerScore <= 17 && playerBust == 0)
-	{
-		if (dealerScore > playerScore)
-			break;
 		cout << "Dealer gets: " << "\t";
 		func_printCard(*cardptr);
 		cout << "\t";
 		dealerScore += func_cardValue(*cardptr++);
-		cout << "Dealer's current score is: " << dealerScore << endl;
+		cout << "Dealer's current score: " << dealerScore << endl;
+	//cout << dealerScore << func_cardValue(*cardptr);
 
-		if (dealerScore > 17)
-			dealerBust = 1;
-	}
+		cout << "Player gets: " << "\t";
+		func_printCard(*cardptr);
+		cout << "\t";
+		playerScore += func_cardValue(*cardptr++);
+		cout << "Your current score is: " << playerScore << endl;
+
+		int move = 1; 
+		int playerBust = 0;
+		int dealerBust = 0;
+	// Player turn
+		while (1)
+		{
+			int move = func_playerMove();
+
+			if (move == 1)
+			{
+				cout << "You get: " << "\t";
+				func_printCard(*cardptr);
+				cout << "\t";
+				playerScore += func_cardValue(*cardptr++);
+				cout << "Your current score is: " << playerScore << endl;
+			}
+			else
+				break;
+			if (playerScore > 21)
+			{
+				playerBust = 1;
+				break;
+			}
+		}
+
+		// dealer turn
+		while (dealerScore <= 17 && playerBust == 0)
+		{
+			if (dealerScore > playerScore)
+				break;
+			cout << "Dealer gets: " << "\t";
+			func_printCard(*cardptr);
+			cout << "\t";
+			dealerScore += func_cardValue(*cardptr++);
+			cout << "Dealer's current score is: " << dealerScore << endl;
+
+			if (dealerScore > 17)
+				dealerBust = 1;
+		}
 
 	// Victory condition
 	// -----------------
-	if (playerBust == 1)
-		cout << "You busted and lost." << endl;
-	else
-	{
-		if (dealerBust == 1)
-			cout << "Dealer busted. You WIN !!!" << endl;
+		if (playerBust == 1)
+			cout << "You busted and lost." << endl;
 		else
 		{
-			if(playerScore > dealerScore)
-				cout << "Congratulations !!! You win!" << endl;
-			else if(playerScore < dealerScore)
-				cout << "Sorry... You lose... :(" << endl;
+			if (dealerBust == 1)
+				cout << "Dealer busted. You WIN !!!" << endl;
 			else
-				cout << "It's a tie. Play again and try your luck!" << endl;
+			{
+				if(playerScore > dealerScore)
+					cout << "Congratulations !!! You win!" << endl;
+				else if(playerScore < dealerScore)
+					cout << "Sorry... You lose... :(" << endl;
+				else
+					cout << "It's a tie. Play again and try your luck!" << endl;
+			}
 		}
-	}
 	// Print Scores
-	cout << "Player Score: " << playerScore << "\t" << "Dealer Score: " << dealerScore << endl;
+		cout << "Player Score: " << playerScore << "\t" << "Dealer Score: " << dealerScore << endl;
 
 // Bhikar Savkar 
 /*
@@ -288,6 +352,7 @@ int main()
 // bhikar savkar end
 */
 	return 0;
+}
 }
 
 
