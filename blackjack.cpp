@@ -231,6 +231,8 @@ int main()
 	char startGame;
 	cout << "Press ENTER to start the game! ";
 	startGame = cin.get();
+
+	Card *cardptr = &deck[0];
 	do
 	{
 // *** BLACKJACK ***
@@ -240,7 +242,7 @@ int main()
 		cout << "Don't say I didn't warn you";
 		dotDelay(3, 500);
 		cout << "\n"; 
-		Card *cardptr = &deck[0];
+		
 
 		int playerScore = 0;
 		int dealerScore = 0;
@@ -255,7 +257,9 @@ int main()
 
 		cout << "Player gets: " << "\t";
 		func_printCard(*cardptr);
-		cout << "\t";
+		playerScore += func_cardValue(*cardptr++);
+		cout << " & " << "\t";
+		func_printCard(*cardptr);
 		playerScore += func_cardValue(*cardptr++);
 		cout << "Your current score is: " << playerScore << endl;
 
