@@ -2,6 +2,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
 
 using namespace std;
 
@@ -129,6 +130,11 @@ int func_playerMove()
 
 int main()
 {
+	
+	cout << right << setw(50) << setfill(' ') << "Welcome to Simple BlackJack" << endl;
+	cout << right << setw(50) << setfill(' ') << "Written by Tejas Gokhale  " << endl;
+	cout << right << setw(50) << setfill(' ')<<  "***************************" << endl;
+
 	Card *deck = new Card[NUM_OF_CARDS];
 
 // initialize deck of 52 cards
@@ -162,10 +168,18 @@ int main()
 	int dealerScore = 0;
 	// deal cards
 	// -----------
+	cout << "Dealer gets: " << "\t";
+	func_printCard(*cardptr);
+	cout << "\t";
 	dealerScore += func_cardValue(*cardptr++);
 	cout << "Dealer's current score: " << dealerScore << endl;
 	//cout << dealerScore << func_cardValue(*cardptr);
+
+	cout << "Player gets: " << "\t";
+	func_printCard(*cardptr);
+	cout << "\t";
 	playerScore += func_cardValue(*cardptr++);
+	cout << "Your current score is: " << playerScore << endl;
 
 	int move = 1; 
 	int playerBust = 0;
@@ -173,11 +187,16 @@ int main()
 	// Player turn
 	while (1)
 	{
-		cout << "Your current score is: " << playerScore << endl;
 		int move = func_playerMove();
 
 		if (move == 1)
+		{
+			cout << "You get: " << "\t";
+			func_printCard(*cardptr);
+			cout << "\t";
 			playerScore += func_cardValue(*cardptr++);
+			cout << "Your current score is: " << playerScore << endl;
+		}
 		else
 			break;
 		if (playerScore > 21)
@@ -189,8 +208,14 @@ int main()
 
 	while (dealerScore <= 17 && playerBust == 0)
 	{
+		if (dealerScore > playerScore)
+			break;
+		cout << "Dealer gets: " << "\t";
+		func_printCard(*cardptr);
+		cout << "\t";
 		dealerScore += func_cardValue(*cardptr++);
 		cout << "Dealer's current score is: " << dealerScore << endl;
+
 		if (dealerScore > 17)
 			dealerBust = 1;
 	}
@@ -198,17 +223,17 @@ int main()
 	// Victory condition
 	// -----------------
 	if (playerBust == 1)
-		cout << "Player busted and lost." << endl;
+		cout << "You busted and lost." << endl;
 	else
 	{
 		if (dealerBust == 1)
-			cout << "Dealer busted. Player WINS !!!" << endl;
+			cout << "Dealer busted. You WIN !!!" << endl;
 		else
 		{
 			if(playerScore > dealerScore)
-				cout << "Congratulations !!! Player wins!" << endl;
+				cout << "Congratulations !!! You win!" << endl;
 			else if(playerScore < dealerScore)
-				cout << "Sorry... Player loses... :(" << endl;
+				cout << "Sorry... You lose... :(" << endl;
 			else
 				cout << "It's a tie. Play again and try your luck!" << endl;
 		}
