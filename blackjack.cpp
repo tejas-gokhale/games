@@ -159,7 +159,7 @@ int main()
 	cout << right << setw(50) << setfill(' ')<<  "***************************" << endl;
 
 	cout << "Loading ";
-	dotDelay(5, 1000);
+	dotDelay(3, 1000);
 
 
 	Card *deck = new Card[NUM_OF_CARDS];
@@ -225,6 +225,11 @@ int main()
 	{
 // *** BLACKJACK ***
 // ------------------
+		cout << "So you want to challenge ME?" << endl;
+		sleep (1);
+		cout << "Don't say I didn't warn you";
+		dotDelay(3, 500);
+		cout << "\n"; 
 		Card *cardptr = &deck[0];
 
 		int playerScore = 0;
@@ -272,7 +277,7 @@ int main()
 		// dealer turn
 		while (dealerScore <= 17 && playerBust == 0)
 		{
-			if (dealerScore > playerScore)
+			if (dealerScore > playerScore || dealerScore == 17)
 				break;
 			cout << "Dealer gets: " << "\t";
 			func_printCard(*cardptr);
