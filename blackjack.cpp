@@ -150,10 +150,14 @@ void dotDelay(int numOfDots, int pause)
 	cout << endl;
 }
 
+void clearScreen()
+{
+	cout << string( 100, '\n' );
+}
 
 int main()
 {
-	system("cls");
+	// clearScreen(50, '\n');
 	SetConsoleTitle("Simple BlackJack by Tejas Gokhale");
 	cout << right << setw(50) << setfill(' ') << "Welcome to Simple BlackJack" << endl;
 	cout << right << setw(50) << setfill(' ') << "Written by Tejas Gokhale  " << endl;
@@ -219,10 +223,10 @@ int main()
 	dotDelay(3, 1000);
 	cout << endl;
 
-
-	int startGame;
-	cout << "Press ENTER to play. If you have the guts, i.e.: ";
-	if (cin.get() == '\n')
+	char startGame;
+	cout << "Press ENTER to start the game! ";
+	startGame = cin.get();
+	do
 	{
 // *** BLACKJACK ***
 // ------------------
@@ -358,9 +362,26 @@ int main()
 		cout << "both players. It's a DRAW... :-/" << endl;
 // bhikar savkar end
 */
-	system("pause");
+
+		cout << "Press Y to <PLAY AGAIN> and N to <RUN AWAY>. I know you ain't a quitter...";
+		cin >> startGame;
+		cout << '\n';
+
+		if (startGame == 'n')
+		{
+			cout << "Oh such a coward";
+			sleep(1);
+			cout << ".";
+			sleep(1);
+			cout << ".";
+			sleep(1);
+			cout << ".";
+			cout << '\n';
+			break;
+		}	
+	} while(startGame == 'y');
+
 	return 0;
-}
 }
 
 
