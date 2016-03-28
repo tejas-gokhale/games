@@ -153,7 +153,8 @@ void dotDelay(int numOfDots, int pause)
 
 int main()
 {
-	
+	system("cls");
+	SetConsoleTitle("Simple BlackJack by Tejas Gokhale");
 	cout << right << setw(50) << setfill(' ') << "Welcome to Simple BlackJack" << endl;
 	cout << right << setw(50) << setfill(' ') << "Written by Tejas Gokhale  " << endl;
 	cout << right << setw(50) << setfill(' ')<<  "***************************" << endl;
@@ -310,6 +311,7 @@ int main()
 	// Print Scores
 		cout << "Player Score: " << playerScore << "\t" << "Dealer Score: " << dealerScore << endl;
 
+
 // Bhikar Savkar 
 /*
 // deal (2 players)
@@ -356,6 +358,7 @@ int main()
 		cout << "both players. It's a DRAW... :-/" << endl;
 // bhikar savkar end
 */
+	system("pause");
 	return 0;
 }
 }
